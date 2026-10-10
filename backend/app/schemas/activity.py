@@ -38,6 +38,23 @@ class FieldActivity(BaseModel):
     )
 
 
+
 class FieldSession(BaseModel):
     activity: FieldActivity
-    observations: list[Observation] = []
+    observations: list[Observation] = Field(default_factory=list)
+
+
+class DebriefRequest(BaseModel):
+    hypothesis: str = Field(
+        min_length=5,
+        max_length=1000,
+        description="The user's explanation for the observed pattern",
+    )
+
+
+class DebriefResponse(BaseModel):
+    summary: str
+    evidence: list[str]
+    assumptions: list[str]
+    next_steps: list[str]
+    reflection_question: str
